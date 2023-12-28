@@ -21,9 +21,7 @@ jobs:
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
     - name: Build and push
-      uses: docker/build-push-action@v5
-      with:
-        context: .
-        file: sample-artifacts/docker/Dockerfile
-        push: true
-        tags: exercise/test:latest
+      run: |
+        docker build --file sample-packages/docker/Dockerfile exercise/test:latest
+        docker tag exercise/test:latest ghcr.io/exercise/test:latest
+        docker push ghcr.io/exercise/test:latest
