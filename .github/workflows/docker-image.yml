@@ -28,3 +28,5 @@ jobs:
         file: ./Dockerfile
         push: true
         tags: exercise-publish-package/test:latest
+        secrets: |
+            GIT_AUTH_TOKEN=${{ secrets.GITHUB_TOKEN }}
