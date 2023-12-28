@@ -14,10 +14,16 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    - name: Build the Docker image
-      run: docker build . --file sample-packages/docker/Dockerfile --tag my-image-name:$(date +%s)
-    - name: Push the Docker image
-      run: |
-        echo $GITHUB_TOKEN | docker login ghcr.io -u einarvelez --password-stdin
-        docker tag IMAGE_ID ghcr.io/exercise/test:latest
-        docker push ghcr.io/exercise/test:latest
+    - name: Login to GitHub Container Registry
+      uses: docker/login-action@v3
+      with:
+        registry: ghcr.io
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+    - name: Build and push
+      uses: docker/build-push-action@v5
+      with:
+        context: .
+        file: sample-artifacts/docker/Dockerfile
+        push: true
+        tags: exercise/test:latest
