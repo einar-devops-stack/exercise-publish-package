@@ -14,6 +14,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
     - name: Login to GitHub Container Registry
       uses: docker/login-action@v3
       with:
@@ -21,7 +23,8 @@ jobs:
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
     - name: Build and push
-      run: |
-        docker build --file sample-packages/docker/Dockerfile exercise/test:latest
-        docker tag exercise/test:latest ghcr.io/exercise/test:latest
-        docker push ghcr.io/exercise/test:latest
+      uses: docker/build-push-action@v5
+      with:
+        context: "{{defaultContext}}:sample-packages/docker"
+        push: true
+        tags: user/app:latest
