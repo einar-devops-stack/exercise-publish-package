@@ -24,9 +24,6 @@ jobs:
     - name: Build and push
       uses: docker/build-push-action@v5
       with:
-        context: "{{defaultContext}}:sample-packages/docker"
-        file: ./Dockerfile
+        context: .
         push: true
         tags: exercise-publish-package/test:latest
-        secrets: |
-            GIT_AUTH_TOKEN=${{ secrets.GITHUB_TOKEN }}
