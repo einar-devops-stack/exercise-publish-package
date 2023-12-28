@@ -25,6 +25,6 @@ jobs:
       uses: docker/build-push-action@v5
       with:
         context: "{{defaultContext}}:sample-packages/docker"
-        file: ./sample-packages/docker/Dockerfile
+        file: ./Dockerfile
         push: true
         tags: exercise-publish-package/test:latest
